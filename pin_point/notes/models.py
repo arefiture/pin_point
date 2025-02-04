@@ -74,6 +74,7 @@ class Note(models.Model):
             self.updated_at = models.DateTimeField.auto_now
         super().save(*args, **kwargs) 
 
+
 class NoteTags(models.Model):
     """Связующая между тегами и заметками (М-М)."""
     note = models.ForeignKey(
@@ -97,6 +98,7 @@ class NoteTags(models.Model):
                 name='unique_tag_for_note'
             ),
         ]
+
 
 class Favorite(models.Model):
     """Избранные заметки."""
