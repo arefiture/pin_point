@@ -3,13 +3,14 @@ from rest_framework import serializers
 
 from notes.models import Favorite, Note, NoteTags, Tag
 
-User = get_user_model() # Выделить сериалайзер для регистрации/авторизации/действий
+User = get_user_model()  # Выделить сериалайзер для регистрации/авторизации/действий
 
 # TODO: на каждый из сериалайзеров нужно выделить отдельные для CRUD
 
 
 class TagSerializer(serializers.ModelSerializer):
     """Сериалайзер тегов."""
+    # TODO: Возможно, стоит сделать поле только для чтения.
 
     class Meta:
         model = Tag

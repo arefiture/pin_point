@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.utils.text import slugify
+from slugify import slugify
 
 User = get_user_model()
 
@@ -28,6 +28,7 @@ class Tag(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
+            # TODO: предусмотреть уникальность при обновлении.
         super().save(*args, **kwargs)
 
 
