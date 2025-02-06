@@ -1,9 +1,10 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers, validators
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from notes.models import Favorite, Note, NoteTags, Tag
 
-User = get_user_model()  # Выделить сериалайзер для регистрации/авторизации/действий
+User = get_user_model()
 
 # TODO: на каждый из сериалайзеров нужно выделить отдельные для CRUD
 
@@ -45,13 +46,21 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
+class LoginSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        token['username'] = user.username
+        return token
+
+
 class UserProfileSerializer(serializers.ModelSerializer):
     """Сериалайзер под профиль."""
 
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'first_name', 'last_name')
-        read_only_fields = ('id', 'username', 'email')
+        read_only_fields = ('id', )
 
 
 class TagSerializer(serializers.ModelSerializer):
