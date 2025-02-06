@@ -73,7 +73,7 @@ class Note(models.Model):
     def save(self, *args, **kwargs):
         if self.pk:  # PK назначается при создании. В моменте он пуст.
             self.updated_at = models.DateTimeField.auto_now
-        super().save(*args, **kwargs) 
+        super().save(*args, **kwargs)
 
 
 class NoteTags(models.Model):

@@ -1,3 +1,4 @@
+from datetime import timedelta
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -15,6 +16,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework_simplejwt',
     'notes.apps.NotesConfig',
     'users.apps.UsersConfig',
     'api.apps.ApiConfig',
@@ -87,3 +90,19 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',  # По умолчанию доступ только для аутентифицированных
+    ],
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=12),  # Срок действия access-токена
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),    # Срок действия refresh-токена
+    'ROTATE_REFRESH_TOKENS': True,                  # Обновлять refresh-токен при каждом запросе
+    'BLACKLIST_AFTER_ROTATION': True,               # Добавлять старые токены в черный список
+}
